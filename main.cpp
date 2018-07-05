@@ -13,6 +13,7 @@ using namespace std;
 int main(){
   freopen("1.s", "r", stdin);
   preProcess();
+  freopen("1.in", "r", stdin);
   while(true){
     InstructionFetch();
     InstructionDecode();
