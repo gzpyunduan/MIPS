@@ -39,20 +39,19 @@ void Syscall() {
 	case 4: { printf("%s", Data + reg[4]); break; }
 	case 5: {
 		int a;
-		fin >> a;
+		scanf("%d", &a);
 		//cout << "cin >> " << a;
 		ff = FF(1, 0, 2, 0, 0, a);
 		break;
 	}
 	case 8: {
 		string s1;
-		fin >> s1;
-		/*c = getchar();
+		c = getchar();
 		if (!isChar(c)) c = getchar();
 		while (isChar(c)) {
 			s1 += c;
 			c = getchar();
-		}*/
+		}
 		//cout << "cin >> " << s1;
 		l = s1.size() >= (reg[5] + 1) ? (reg[5] + 1) : s1.size();
 		for (int j = 0; j < l; j++)
