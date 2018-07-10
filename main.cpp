@@ -24,9 +24,9 @@ int main(int argc, char *argv[]){
 	//cout << reg[34] << endl;
     InstructionFetch();
     InstructionDecode();
-	Execute();
+    Execute();
     MemoryAccess();
-	WriteBack();
+    WriteBack();
     
     if (s == "\0" && t.tk == NONE && m.empty() && w.empty())
       break;
