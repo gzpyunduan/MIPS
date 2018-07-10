@@ -17,7 +17,6 @@ int main(int argc, char *argv[]){
   fin.open(argv[1]);
   preProcess();
   //freopen("19.in", "r", stdin);
-  fin.close();
   while(true){
 	s = ""; t.tk = NONE;
 	if (!m.empty()) m.pop();
