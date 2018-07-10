@@ -2,6 +2,7 @@
 #define _INIT
 
 #include <iostream>
+#include <fstream>
 #include <cstdio>
 #include <cstring>
 #include <string>
@@ -19,6 +20,7 @@ enum tokenType {
 };
 
 static const int SP = 4000000;
+static ifstream fin;
 static int var[1000];
 static int fun[1000];
 static unsigned char Data[4000000];
