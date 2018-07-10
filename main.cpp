@@ -16,6 +16,7 @@ int main(int argc, char *argv[]){
   //freopen("1.out", "w", stdout);
   preProcess();
   //freopen("19.in", "r", stdin);
+  fin.open(argv[1]);
   while(true){
 	s = ""; t.tk = NONE;
 	if (!m.empty()) m.pop();
@@ -24,9 +25,9 @@ int main(int argc, char *argv[]){
 	//cout << reg[34] << endl;
     InstructionFetch();
     InstructionDecode();
-    Execute();
+	Execute();
     MemoryAccess();
-    WriteBack();
+	WriteBack();
     
     if (s == "\0" && t.tk == NONE && m.empty() && w.empty())
       break;
