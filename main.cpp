@@ -14,9 +14,10 @@ using namespace std;
 int main(int argc, char *argv[]){
   //freopen("19.s", "r", stdin);
   //freopen("1.out", "w", stdout);
+  fin.open(argv[1]);
   preProcess();
   //freopen("19.in", "r", stdin);
-  fin.open(argv[1]);
+  fin.close();
   while(true){
 	s = ""; t.tk = NONE;
 	if (!m.empty()) m.pop();
