@@ -105,11 +105,10 @@ struct Token {
 };
 
 static Token t;
-static Token ts[10000];
 
 void InstructionDecode() {
 	if (s == "\0") return;
-	t = Token(s);
+	t = Token(l);
 	//s = "";
 }
 
