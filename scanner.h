@@ -7,7 +7,7 @@ void InstructionFetch(){
   if (fend) return;
   //cout << reg[34] << ' ';
   s = Text[reg[34]++];
-  cout << s << endl;
+  //cout << s << endl;
 }
 
 #endif
