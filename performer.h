@@ -81,11 +81,11 @@ void Execute() {
 		break;
 	case MUL: case MULU:
 		if (t.size == 3) ff = FF(1, 0, t.p[0], 0, 0, t.p[1] * t.p[2]);
-		else ff = FF(1, 0, 32, 0, 0, reg[t.p[0]] * t.p[1] >> 32, reg[t.p[0]] * t.p[1]);
+		else ff = FF(1, 0, 32, 0, 0, t.p[0] * t.p[1] >> 32, t.p[0] * t.p[1]);
 		break;
 	case DIV: case DIVU:
 		if (t.size == 3) ff = FF(1, 0, t.p[0], 0, 0, t.p[1] / t.p[2]);
-		else ff = FF(1, 0, 32, 0, 0, reg[t.p[0]] % t.p[1], reg[t.p[0]] / t.p[1]);
+		else ff = FF(1, 0, 32, 0, 0, t.p[0] % t.p[1], t.p[0] / t.p[1]);
 		break;
 	case XOR: case XORU:
 		ff = FF(1, 0, t.p[0], 0, 0, t.p[1] ^ t.p[2]);
@@ -127,64 +127,64 @@ void Execute() {
 		ff = FF(1, 0, 34, 0, 0, t.p[0]);
 		break;
 	case BEQ:
-		if (reg[t.p[0]] == t.p[1])
+		if (t.p[0] == t.p[1])
 			ff = FF(1, 0, 34, 0, 0, t.p[2]);
 		break;
 	case BNE:
-		if (reg[t.p[0]] != t.p[1])
+		if (t.p[0] != t.p[1])
 			ff = FF(1, 0, 34, 0, 0, t.p[2]);
 		break;
 	case BGE:
-		if (reg[t.p[0]] >= t.p[1])
+		if (t.p[0] >= t.p[1])
 			ff = FF(1, 0, 34, 0, 0, t.p[2]);
 		break;
 	case BLE:
-		if (reg[t.p[0]] <= t.p[1])
+		if (t.p[0] <= t.p[1])
 			ff = FF(1, 0, 34, 0, 0, t.p[2]);
 		break;
 	case BGT:
-		if (reg[t.p[0]] > t.p[1])
+		if (t.p[0] > t.p[1])
 			ff = FF(1, 0, 34, 0, 0, t.p[2]);
 		break;
 	case BLT:
-		if (reg[t.p[0]] < t.p[1])
+		if (t.p[0] < t.p[1])
 			ff = FF(1, 0, 34, 0, 0, t.p[2]);
 		break;
 	case BEQZ:
-		if (reg[t.p[0]] == 0)
+		if (t.p[0] == 0)
 			ff = FF(1, 0, 34, 0, 0, t.p[1]);
 		break;
 	case BNEZ:
-		if (reg[t.p[0]] != 0)
+		if (t.p[0] != 0)
 			ff = FF(1, 0, 34, 0, 0, t.p[1]);
 		break;
 	case BLEZ:
-		if (reg[t.p[0]] <= 0)
+		if (t.p[0] <= 0)
 			ff = FF(1, 0, 34, 0, 0, t.p[1]);
 		break;
 	case BGEZ:
-		if (reg[t.p[0]] >= 0)
+		if (t.p[0] >= 0)
 			ff = FF(1, 0, 34, 0, 0, t.p[1]);
 		break;
 	case BGTZ:
-		if (reg[t.p[0]] > 0)
+		if (t.p[0] > 0)
 			ff = FF(1, 0, 34, 0, 0, t.p[1]);
 		break;
 	case BLTZ:
-		if (reg[t.p[0]] < 0)
+		if (t.p[0] < 0)
 			ff = FF(1, 0, 34, 0, 0, t.p[1]);
 		break;
 	case J:
 		ff = FF(1, 0, 34, 0, 0, t.p[0]);
 		break;
 	case JR:
-		ff = FF(1, 0, 34, 0, 0, reg[t.p[0]]);
+		ff = FF(1, 0, 34, 0, 0, t.p[0]);
 		break;
 	case JAL:
 		ff = FF(1, 0, 42, 0, 0, t.p[0]);
 		break;
 	case JALR:
-		ff = FF(1, 0, 34, 0, 0, reg[t.p[0]]);
+		ff = FF(1, 0, 34, 0, 0, t.p[0]);
 		break;
 
 	case LA:
@@ -208,7 +208,6 @@ void Execute() {
 		break;
 	case SW:
 		ff = FF(0, 1, t.p[0], t.p[1], 4);
-		//cout << t.p[0] << ' ' << t.p[1] << endl;
 		break;
 
 	case MOVE:
