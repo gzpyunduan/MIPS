@@ -19,6 +19,8 @@ enum tokenType {
 	LB, LH, LW, SB, SH, SW, MOVE, MFHI, MFLO, NOP, SYSCALL, NONE
 };
 
+enum dataType {REG, FUN, VAR, NUM};
+
 static const int SP = 4000000;
 static ifstream fin;
 static int var[1000];
