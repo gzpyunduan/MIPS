@@ -243,6 +243,10 @@ void varieble() {
 				return;
 		}
 		if (s == "\t.data" || s == "\t.text") break;
+		else {
+			while (s[s.size() - 1] != ':')
+				s.pop_back();
+		}
 		v = 1;
 		int si = vti.size();
 		var[si] = posd;
