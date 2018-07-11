@@ -38,7 +38,7 @@ void Syscall() {
 	case 1: { printf("%d", reg[4]); break; }
 	case 4: { printf("%s", Data + reg[4]); break; }
 	case 5: {
-		int a;
+		int a = 0;
 		scanf("%d", &a);
 		//cout << "cin >> " << a;
 		ff = FF(1, 0, 2, 0, 0, a);
@@ -208,6 +208,7 @@ void Execute() {
 		break;
 	case SW:
 		ff = FF(0, 1, t.p[0], t.p[1], 4);
+		cout << t.p[0] << ' ' << t.p[1] << endl;
 		break;
 
 	case MOVE:
