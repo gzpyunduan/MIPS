@@ -120,7 +120,7 @@ void Execute() {
 		ff = FF(1, 0, t.p[0], 0, 0, (t.p[1] < t.p[2]));
 		break;
 	case SNE:
-		ff = FF(1, 0, t.p[0], 0, 0, (t.p[1] <= t.p[2]));
+		ff = FF(1, 0, t.p[0], 0, 0, (t.p[1] != t.p[2]));
 		break;
 
 	case B:
