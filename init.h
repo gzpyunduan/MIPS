@@ -34,7 +34,7 @@ static map<string, int> rti;
 static map<string, tokenType> oti;
 static map<string, int> fti;
 static map<string, int> vti;
-int posd, post;
+int posd = 0, post = 0;
 bool v = 0;
 
 int toInt(const string &s) {
@@ -260,8 +260,9 @@ void function() {
 				int k = 0;
 				while (s[k] == '\t') k++;
 				string s1 = s.substr(k, s.size() - k);
-				fun[fti.size()] = post;
-				fti[s1] = fti.size();
+				int fi = fti.size();
+				fun[fi] = post;
+				fti[s1] = fi;
 			}
 		}
 		else Text[post++] = s;
