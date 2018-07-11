@@ -150,8 +150,8 @@ void varieble() {
 	s = "";
 	while (true) {
 		while (true) {
-			getline(fin, s);
-			if (!v) while (s[s.size() - 1] != ':') getline(fin, s);
+			getline(cin, s);
+			if (!v) while (s[s.size() - 1] != ':') getline(cin, s);
 			if (s[1] != '.') break;
 			if (s == "\t.data" || s == "\t.text") return;
 
@@ -251,7 +251,7 @@ void varieble() {
 }
 
 void function() {
-	while (getline(fin, s)) {
+	while (getline(cin, s)) {
 		if (s == "\t.data" || s == "\t.text") return;
 		if (s == "\0") continue;
 		if (s[s.size() - 1] == ':') {
@@ -271,7 +271,7 @@ void function() {
 void preProcess() {
 	RegToInt();
 	OptToInt();
-	getline(fin, s);
+	getline(cin, s);
 	while (s != "\0") {
 		if (s == "\t.data") varieble();
 		if (s == "\t.text") function();
