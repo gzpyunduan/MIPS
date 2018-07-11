@@ -7,71 +7,105 @@
 #include "scanner.h"
 using namespace std;
 
-int getAddress(const string &s) {
-	int i = 0, mv;
-	string tmp;
-	if (s[i] == '-') {
-		i++;
-		while (s[i] != '(')
-			tmp += s[i++];
-		mv = -toInt(tmp);
-	}
-	else {
-		while (s[i] != '(')
-			tmp += s[i++];
-		mv = toInt(tmp);
-	}
-	tmp = "";
-
-	i++;
-	while (s[i] != ')')
-		tmp += s[i++];
-	return reg[rti[tmp]] + mv;
-}
-
 struct Token {
-	tokenType tk = NONE;
+	optType tk = NONE;
 	int p[3];
 	int size = 0;
 
 	Token() :tk(NONE), size(0) {}
 
-	Token(const string &s) {
-		int i = 0;
-		while (s[i] == '\t' || s[i] == ' ') i++;
-		int h = i;
-		while (s[i] != ' ' && s[i] != '\0') i++;
-		string order = s.substr(h, i - h);
-		if (oti.find(order) == oti.end()) tk == NONE;
-		else tk = oti[order];
+	Token(const Line &l) {
+		tk = l.tk;
 
-		while (s[i] != '\0') {
-			while (s[i] == ' ' || s[i] == ',') i++;
-			h = i;
-			while (s[i] != ' ' && s[i] != ',' && s[i] != '\0') i++;
-			string word = s.substr(h, i - h);
-			if (word[0] == '_') {
-				word += ':';
-				if (fti.find(word) != fti.end())
-					p[size++] = fun[fti[word]];
-				else
-					p[size++] = var[vti[word]];
+		if (tk == LA) {
+			size = l.size;
+			p[0] = l.p[0];
+			if (l.d[1] == FUN)
+				p[1] = fun[l.p[1]];
+			else
+				p[1] = var[l.p[1]];
+		}
+		else if (tk >= LB && tk <= SW) {
+			if (l.size == 3) {
+				size = l.size - 1;
+				p[0] = l.p[0];
+				p[1] = l.p[1] + reg[l.p[2]];
 			}
-			else if (word[0] == '$') {
-				if (size == 0)
-					p[size++] = rti[word];
+			else {
+				size = l.size - 1;
+				p[0] = l.p[0];
+				if (l.d[1] == FUN)
+					p[1] = fun[l.p[1]];
 				else
-					p[size++] = reg[rti[word]];
+					p[1] = var[l.p[1]];
 			}
-				
-			else if (word[word.size() - 1] == ')')
-				p[size++] = getAddress(word);
-			else p[size++] = toInt(word);
+		}
+		else if (tk >= MUL && tk <= DIVU) {
+			size = l.size;
+			if (size == 2) {
+				p[0] = reg[l.p[0]];
+				if (l.d[1] == REG)
+					p[1] = reg[l.p[1]];
+				else
+					p[1] = l.p[1];
+			}
+			else {
+				p[0] = l.p[0];
+				p[1] = reg[l.p[1]];
+				if (l.d[2] == REG)
+					p[2] = reg[l.p[2]];
+				else
+					p[2] = l.p[2];
+			}
+		}
+		else if (tk == B || tk == J || tk == JAL) {
+			size = l.size;
+			if (l.d[0] == FUN)
+				p[0] = fun[l.p[0]];
+			else
+				p[0] = var[l.p[0]];
+		}
+		else if (tk == JR || tk == JALR) {
+			size = l.size;
+			p[0] = reg[l.p[0]];
+		}
+		else if (tk >= BEQ && tk <= BLT) {
+			size = l.size;
+			p[0] = reg[l.p[0]];
+			if (l.d[1] == REG)
+				p[1] = reg[l.p[1]];
+			else
+				p[1] = l.p[1];
+			if (l.d[2] == FUN)
+				p[2] = fun[l.p[2]];
+			else
+				p[2] = var[l.p[2]];
+		}
+		else if (tk >= BEQZ && tk <= BLTZ) {
+			size = l.size;
+			p[0] = reg[l.p[0]];
+			if (l.d[1] == FUN)
+				p[1] = fun[l.p[1]];
+			else
+				p[1] = var[l.p[1]];
+		}
+		else if (tk == NOP || tk == SYSCALL) {
+			size = 0;
+		}
+		else {
+			p[0] = l.p[0];
+			size = l.size;
+			for (int i = 1; i < size; i++) {
+				if (l.d[i] == REG)
+					p[i] = reg[l.p[i]];
+				else p[i] = l.p[i];
+			}
 		}
 	}
 };
 
 static Token t;
+static Token ts[10000];
 
 void InstructionDecode() {
 	if (s == "\0") return;
