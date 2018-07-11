@@ -11,7 +11,7 @@
 #include <cmath>
 using namespace std;
 
-enum tokenType {
+enum optType {
 	ADD, ADDU, ADDIU, SUB, SUBU, MUL, MULU, DIV,
 	DIVU, XOR, XORU, NEG, NEGU, REM, REMU, LI, SEQ, SGE,
 	SGT, SLE, SLT, SNE, B, BEQ, BNE, BGE, BLE, BGT, BLT,
@@ -33,7 +33,7 @@ static bool fend = 0;
 static int revalue = 0;
 static string s;
 static map<string, int> rti;
-static map<string, tokenType> oti;
+static map<string, optType> oti;
 static map<string, int> fti;
 static map<string, int> vti;
 int posd = 0, post = 0;
