@@ -12,11 +12,12 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
-	freopen("1.s", "r", stdin);
+	//freopen("1.s", "r", stdin);
 	//freopen("1.out", "w", stdout);
-	//fin.open(argv[1]);
+	fin.open(argv[1]);
 	preProcess();
-	freopen("1.in", "r", stdin);
+	fin.close();
+	//freopen("1.in", "r", stdin);
 
 	while (true) {
 		s = ""; t.tk = NONE;
@@ -33,6 +34,5 @@ int main(int argc, char *argv[]) {
 		if (s == "\0" && t.tk == NONE && m.empty() && w.empty())
 			break;
 	}
-	while (true) {}
 	return 0;
 }
