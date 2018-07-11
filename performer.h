@@ -208,7 +208,7 @@ void Execute() {
 		break;
 	case SW:
 		ff = FF(0, 1, t.p[0], t.p[1], 4);
-		cout << t.p[0] << ' ' << t.p[1] << endl;
+		//cout << t.p[0] << ' ' << t.p[1] << endl;
 		break;
 
 	case MOVE:
