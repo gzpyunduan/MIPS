@@ -4,17 +4,17 @@
 #include "memory.h"
 
 void WriteBack(){
-  if (w.empty()) return;
-  FF tmp = w.front();
-  if (tmp.rn == -1) return;
-  if (tmp.rn == 42) {
-	reg[31] = reg[34];
-	reg[34] = tmp.ans1;
+  if (w.rn == -1) return;
+  if (w.rn == 42) {
+	reg[31] = ra;
+	reg[34] = w.ans1;
   }
   else {
-	reg[tmp.rn] = tmp.ans1;
-	if (tmp.rn == 32) reg[33] = tmp.ans2;
+	reg[w.rn] = w.ans1;
+	if (w.rn == 32) reg[33] = w.ans2;
   }
+  w.rn = -1;
+  fj = 0;
   //w.pop();
 }
 
