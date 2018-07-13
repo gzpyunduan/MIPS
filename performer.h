@@ -21,7 +21,8 @@ struct FF {
 	}
 };
 
-static FF m, w;
+static queue<FF> m;
+static queue<FF> w;
 FF ff;
 
 bool isChar(const char &c) {
@@ -74,7 +75,6 @@ void Syscall() {
 void Execute() {
 	ff = FF();
 	if (t.tk == NONE) return;
-	dwb[0] = dwb[1];
 	switch (t.tk) {
 	case ADD: case ADDU: case ADDIU:
 		ff = FF(1, 0, t.p[0], 0, 0, t.p[1] + t.p[2]);
@@ -302,7 +302,6 @@ void Execute() {
 		ff = FF(0, 1, t.p[0], t.p[1], 4);
 		dwb[1] = -1;
 		break;
-
 	case MOVE:
 		ff = FF(1, 0, t.p[0], 0, 0, t.p[1]);
 		dwb[1] = t.p[0];
@@ -319,8 +318,7 @@ void Execute() {
 	case NOP: dwb[1] = -1; break;
 	case SYSCALL: Syscall(); break;
 	}
-	m = ff;
-	t.tk = NONE;
+	m.push(ff);
 }
 
 
