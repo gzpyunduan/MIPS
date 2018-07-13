@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
 		MemoryAccess();
 		WriteBack();
 
-		if (s == "\0" && t.tk == NONE && m.empty() && w.empty())
+		if (l.tk == NONE && t.tk == NONE && m.rn == -1 && w.rn == -1 && fend)
 			break;
 	}
 	return 0;
