@@ -20,10 +20,6 @@ int main(int argc, char *argv[]) {
 	//freopen("1.in", "r", stdin);
 
 	while (true) {
-		s = ""; t.tk = NONE;
-		if (!m.empty()) m.pop();
-		if (!w.empty()) w.pop();
-
 		//cout << reg[34] << endl;
 		InstructionFetch();
 		InstructionDecode();
