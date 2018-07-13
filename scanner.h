@@ -64,7 +64,7 @@ static Line l;
 static Line ls[10000];
 
 void InstructionFetch(){
-  if (fend) return;
+  if (fend || Pau) return;
   //cout << reg[34] << ' ';
   s = Text[reg[34]];
   if (ls[reg[34]].tk == NONE) {
