@@ -5,17 +5,16 @@
 using namespace std;
 
 void MemoryAccess(){
-  if (m.rn == -1) return;
-  if (m.t || m.rn == -1) w = m;
+  if (m.empty()) return;
+  FF tmp = m.front();
+  if (tmp.t || tmp.rn == -1) w.push(tmp);
   else {
-    if (m.type)
-	  toChar(m.address, m.size, reg[m.rn]);
-    else reg[m.rn] = CharToInt(m.address, m.size);
-	FF m1;
-	w = m1;
+    if (tmp.type)
+	  toChar(tmp.address, tmp.size, reg[tmp.rn]);
+    else reg[tmp.rn] = CharToInt(tmp.address, tmp.size);
+	FF tmp1;
+	w.push(tmp1);
   }
-  m.rn = -1;
-  //m.pop();
 }
 
 #endif
