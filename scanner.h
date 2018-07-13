@@ -63,25 +63,17 @@ struct Line {
 static Line l;
 static Line ls[10000];
 
-void InstructionFetch() {
-	if (Pau) {
-		pau--;
-		return;
-	}
-	if (fend || fj) {
-		l.tk = NONE;
-		return;
-	}
-	//cout << reg[34] << ' ';
-	//cout << Text[reg[34]] << endl;
-	if (ls[reg[34]].tk == NONE) {
-		l = Line(Text[reg[34]]);
-		ls[reg[34]] = l;
-	}
-	else l = ls[reg[34]];
-	reg[34]++;
-	if (l.tk == JAL || l.tk == JALR)
-		ra = reg[34];
+void InstructionFetch(){
+  if (fend) return;
+  //cout << reg[34] << ' ';
+  s = Text[reg[34]];
+  if (ls[reg[34]].tk == NONE) {
+	  l = Line(s);
+	  ls[reg[34]] = l;
+  }
+  else l = ls[reg[34]];
+  reg[34]++;
+  //cout << s << endl;
 }
 
 #endif
