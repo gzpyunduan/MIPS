@@ -107,8 +107,44 @@ struct Token {
 static Token t;
 
 void InstructionDecode() {
-	if (s == "\0") return;
+	if (Pau) return;
+	if (l.tk == NONE || fj) {
+		t.tk = NONE;
+		return;
+	}
+	for (int i = 0; i < l.size; i++) {
+		if (l.d[i] == REG) {
+			if (dwb[0] == 42) {
+				if (l.p[i] == 31 || l.p[i] == 34)
+					if (pau < 1) pau = 1;
+			}
+			else if (dwb[1] == 42) {
+				if (l.p[i] == 31 || l.p[i] == 34)
+					if (pau < 2) pau = 2;
+			}
+			else if (l.p[i] == dwb[0]) {
+				if (pau < 1) pau = 1;
+			}
+			else if (l.p[i] == dwb[1]) {
+				if (pau < 2) pau = 2;
+			}
+		}
+		else if (l.tk == SYSCALL) {
+			if (dwb[0] == 2 || dwb[1] == 2) {
+				if (pau < 1) pau = 1;
+			}
+			else if (reg[2] == 1 || reg[2] == 4 || reg[2] == 9 || reg[2] == 17) {
+				if (dwb[0] == 4 || dwb[1] == 4)
+					if (pau < 1) pau = 1;
+			}
+			else if (reg[2] == 8) {
+				if (dwb[0] == 4 || dwb[0] == 5 || dwb[1] == 4 || dwb[1] == 5)
+					if (pau < 1) pau = 1;
+			}
+		}
+	}
 	t = Token(l);
+	l.tk = NONE;
 	//s = "";
 }
 
