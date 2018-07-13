@@ -12,23 +12,23 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
-	//freopen("1.s", "r", stdin);
+	//freopen("2.s", "r", stdin);
 	//freopen("1.out", "w", stdout);
 	fin.open(argv[1]);
 	preProcess();
 	fin.close();
-	//freopen("1.in", "r", stdin);
+	//freopen("2.in", "r", stdin);
 
 	while (true) {
-		//cout << reg[34] << endl;
 		InstructionFetch();
 		InstructionDecode();
 		Execute();
 		MemoryAccess();
 		WriteBack();
 
-		if (l.tk == NONE && t.tk == NONE && m.rn == -1 && w.rn == -1 && fend)
+		if (fend)
 			break;
 	}
+	while (true) {}
 	return 0;
 }
