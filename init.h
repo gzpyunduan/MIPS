@@ -30,13 +30,18 @@ static string Text[10000];
 static int reg[35];
 static int posh = 1000000;
 static bool fend = 0;
+static bool Pau = 0;
+static bool fj = 0;
 static int revalue = 0;
-static string s;
 static map<string, int> rti;
 static map<string, optType> oti;
 static map<string, int> fti;
 static map<string, int> vti;
-int posd = 0, post = 0;
+static int dwb[2] = {-1, -1};
+static int ra;
+static int pau = 0;
+int posd, post;
+string s;
 bool v = 0;
 
 int toInt(const string &s) {
@@ -149,11 +154,10 @@ void OptToInt(){
 }
 
 void varieble() {
-	s = "";
 	while (true) {
 		while (true) {
-			getline(fin, s);
-			if (!v) while (s[s.size() - 1] != ':') getline(fin, s);
+			getline(cin, s);
+			if (!v) while (s[s.size() - 1] != ':') getline(cin, s);
 			if (s[1] != '.') break;
 			if (s == "\t.data" || s == "\t.text") return;
 
@@ -245,10 +249,6 @@ void varieble() {
 				return;
 		}
 		if (s == "\t.data" || s == "\t.text") break;
-		else {
-			while (s[s.size() - 1] != ':')
-				s.pop_back();
-		}
 		v = 1;
 		int si = vti.size();
 		var[si] = posd;
@@ -257,7 +257,7 @@ void varieble() {
 }
 
 void function() {
-	while (getline(fin, s)) {
+	while (getline(cin, s)) {
 		if (s == "\t.data" || s == "\t.text") return;
 		if (s == "\0") continue;
 		if (s[s.size() - 1] == ':') {
@@ -266,9 +266,8 @@ void function() {
 				int k = 0;
 				while (s[k] == '\t') k++;
 				string s1 = s.substr(k, s.size() - k);
-				int fi = fti.size();
-				fun[fi] = post;
-				fti[s1] = fi;
+				fun[fti.size()] = post;
+				fti[s1] = fti.size();
 			}
 		}
 		else Text[post++] = s;
@@ -278,7 +277,7 @@ void function() {
 void preProcess() {
 	RegToInt();
 	OptToInt();
-	getline(fin, s);
+	getline(cin, s);
 	while (s != "\0") {
 		if (s == "\t.data") varieble();
 		if (s == "\t.text") function();
