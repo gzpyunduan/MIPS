@@ -14,91 +14,91 @@ struct Token {
 
 	Token() :tk(NONE), size(0) {}
 
-	Token(const Line &_l) {
-		tk = _l.tk;
+	Token(const Line &l) {
+		tk = l.tk;
 
 		if (tk == LA) {
-			size = _l.size;
-			p[0] = _l.p[0];
-			if (_l.d[1] == FUN)
-				p[1] = fun[_l.p[1]];
+			size = l.size;
+			p[0] = l.p[0];
+			if (l.d[1] == FUN)
+				p[1] = fun[l.p[1]];
 			else
-				p[1] = var[_l.p[1]];
+				p[1] = var[l.p[1]];
 		}
 		else if (tk >= LB && tk <= SW) {
-			if (_l.size == 3) {
-				size = _l.size - 1;
-				p[0] = _l.p[0];
-				p[1] = _l.p[1] + reg[_l.p[2]];
+			if (l.size == 3) {
+				size = l.size - 1;
+				p[0] = l.p[0];
+				p[1] = l.p[1] + reg[l.p[2]];
 			}
 			else {
-				size = _l.size - 1;
-				p[0] = _l.p[0];
-				if (_l.d[1] == FUN)
-					p[1] = fun[_l.p[1]];
+				size = l.size - 1;
+				p[0] = l.p[0];
+				if (l.d[1] == FUN)
+					p[1] = fun[l.p[1]];
 				else
-					p[1] = var[_l.p[1]];
+					p[1] = var[l.p[1]];
 			}
 		}
 		else if (tk >= MUL && tk <= DIVU) {
-			size = _l.size;
+			size = l.size;
 			if (size == 2) {
-				p[0] = reg[_l.p[0]];
-				if (_l.d[1] == REG)
-					p[1] = reg[_l.p[1]];
+				p[0] = reg[l.p[0]];
+				if (l.d[1] == REG)
+					p[1] = reg[l.p[1]];
 				else
-					p[1] = _l.p[1];
+					p[1] = l.p[1];
 			}
 			else {
-				p[0] = _l.p[0];
-				p[1] = reg[_l.p[1]];
-				if (_l.d[2] == REG)
-					p[2] = reg[_l.p[2]];
+				p[0] = l.p[0];
+				p[1] = reg[l.p[1]];
+				if (l.d[2] == REG)
+					p[2] = reg[l.p[2]];
 				else
-					p[2] = _l.p[2];
+					p[2] = l.p[2];
 			}
 		}
 		else if (tk == B || tk == J || tk == JAL) {
-			size = _l.size;
-			if (_l.d[0] == FUN)
-				p[0] = fun[_l.p[0]];
+			size = l.size;
+			if (l.d[0] == FUN)
+				p[0] = fun[l.p[0]];
 			else
-				p[0] = var[_l.p[0]];
+				p[0] = var[l.p[0]];
 		}
 		else if (tk == JR || tk == JALR) {
-			size = _l.size;
-			p[0] = reg[_l.p[0]];
+			size = l.size;
+			p[0] = reg[l.p[0]];
 		}
 		else if (tk >= BEQ && tk <= BLT) {
-			size = _l.size;
-			p[0] = reg[_l.p[0]];
-			if (_l.d[1] == REG)
-				p[1] = reg[_l.p[1]];
+			size = l.size;
+			p[0] = reg[l.p[0]];
+			if (l.d[1] == REG)
+				p[1] = reg[l.p[1]];
 			else
-				p[1] = _l.p[1];
+				p[1] = l.p[1];
 			if (l.d[2] == FUN)
-				p[2] = fun[_l.p[2]];
+				p[2] = fun[l.p[2]];
 			else
-				p[2] = var[_l.p[2]];
+				p[2] = var[l.p[2]];
 		}
 		else if (tk >= BEQZ && tk <= BLTZ) {
-			size = _l.size;
-			p[0] = reg[_l.p[0]];
-			if (_l.d[1] == FUN)
-				p[1] = fun[_l.p[1]];
+			size = l.size;
+			p[0] = reg[l.p[0]];
+			if (l.d[1] == FUN)
+				p[1] = fun[l.p[1]];
 			else
-				p[1] = var[_l.p[1]];
+				p[1] = var[l.p[1]];
 		}
 		else if (tk == NOP || tk == SYSCALL) {
 			size = 0;
 		}
 		else {
-			p[0] = _l.p[0];
-			size = _l.size;
+			p[0] = l.p[0];
+			size = l.size;
 			for (int i = 1; i < size; i++) {
-				if (_l.d[i] == REG)
-					p[i] = reg[_l.p[i]];
-				else p[i] = _l.p[i];
+				if (l.d[i] == REG)
+					p[i] = reg[l.p[i]];
+				else p[i] = l.p[i];
 			}
 		}
 	}
@@ -108,7 +108,7 @@ static Token t;
 
 void InstructionDecode() {
 	if (Pau) return;
-	if (l.tk == NONE || fj) {
+	if (l.tk == NONE) {
 		t.tk = NONE;
 		return;
 	}
@@ -144,8 +144,6 @@ void InstructionDecode() {
 		}
 	}
 	t = Token(l);
-	l.tk = NONE;
-	//s = "";
 }
 
 #endif
