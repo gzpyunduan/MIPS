@@ -11,15 +11,22 @@
 #include "write.h"
 using namespace std;
 
+void init(){
+	s = ""; l.tk = NONE; t.tk = NONE;
+	if (!m.empty()) m.pop();
+	if (!w.empty()) w.pop();
+}
+
 int main(int argc, char *argv[]) {
-	//freopen("2.s", "r", stdin);
+	//freopen("28.s", "r", stdin);
 	//freopen("1.out", "w", stdout);
 	fin.open(argv[1]);
 	preProcess();
 	fin.close();
-	//freopen("2.in", "r", stdin);
+	//freopen("28.in", "r", stdin);
 
 	while (true) {
+		init();
 		InstructionFetch();
 		InstructionDecode();
 		Execute();
@@ -29,6 +36,5 @@ int main(int argc, char *argv[]) {
 		if (fend)
 			break;
 	}
-	while (true) {}
 	return 0;
 }
